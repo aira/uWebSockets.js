@@ -1,0 +1,11 @@
+build/
+node_modules/
+prebuilds/
+.idea/
+uWebSockets/
+*.o
+targets/
+dist/
+*.gz
+*.lib
+*.out

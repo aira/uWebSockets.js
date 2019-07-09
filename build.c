@@ -38,6 +38,13 @@ struct node_version {
     {"v12.0.0", "72"}
 };
 
+struct electron_version {
+    char *name;
+    char *abi;
+} electron_versions[] = {
+    {"v5.0.6", "70"}
+};
+
 /* Downloads headers, creates folders */
 void prepare() {
     if (run("mkdir dist") || run("mkdir targets")) {
@@ -50,6 +57,14 @@ void prepare() {
         run("tar xzf node-%s-headers.tar.gz -C targets", versions[i].name);
         run("curl https://nodejs.org/dist/%s/win-x64/node.lib > targets/node-%s/node.lib", versions[i].name, versions[i].name);
     }
+
+    // Build for electron's node version
+    for (unsigned int i = 0; i < sizeof(electron_versions) / sizeof(struct electron_version); i++) {
+        run("curl -OJL https://electronjs.org/headers/%s/node-%s-headers.tar.gz", electron_versions[i].name, electron_versions[i].name);
+        run("mkdir targets/node-%s", electron_versions[i].name);
+        run("tar xzf node-%s-headers.tar.gz -C targets/node-%s --strip-components=1", electron_versions[i].name, electron_versions[i].name);
+        run("curl -OJL https://electronjs.org/headers/%s/win-x64/node.lib > targets/node-%s/node.lib", electron_versions[i].name, electron_versions[i].name);
+    }
 }
 
 /* Build for Unix systems */
@@ -61,6 +76,12 @@ void build(char *compiler, char *cpp_compiler, char *cpp_linker, char *os, char 
         run("%s %s -I targets/node-%s/include/node", compiler, c_shared, versions[i].name);
         run("%s %s -I targets/node-%s/include/node", cpp_compiler, cpp_shared, versions[i].name);
         run("%s %s %s -o dist/uws_%s_%s_%s.node", cpp_compiler, "-flto -O3 *.o -std=c++17 -shared", cpp_linker, os, arch, versions[i].abi);
+    }
+    // build for electron
+    for (unsigned int i = 0; i < sizeof(electron_versions) / sizeof(struct electron_version); i++) {
+        run("%s %s -I targets/node-%s/include/node", compiler, c_shared, electron_versions[i].name);
+        run("%s %s -I targets/node-%s/include/node", cpp_compiler, cpp_shared, electron_versions[i].name);
+        run("%s %s %s -o dist/uws_%s_%s_%s.node", cpp_compiler, "-flto -O3 *.o -std=c++17 -shared", cpp_linker, os, arch, electron_versions[i].abi);
     }
 }
 
@@ -113,4 +134,3 @@ int main() {
 
     copy_files();
 }
-
