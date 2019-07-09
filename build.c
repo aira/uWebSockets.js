@@ -51,6 +51,10 @@ void prepare() {
         return;
     }
 
+    run("git submodule init && git submodule update");
+    run("cd uWebSockets");
+    run("git submodule init && git submodule update");
+    run("cd ..");
     /* For all versions */
     for (unsigned int i = 0; i < sizeof(versions) / sizeof(struct node_version); i++) {
         run("curl -OJ https://nodejs.org/dist/%s/node-%s-headers.tar.gz", versions[i].name, versions[i].name);
