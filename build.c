@@ -63,7 +63,8 @@ void prepare() {
     for (unsigned int i = 0; i < sizeof(electron_versions) / sizeof(struct electron_version); i++) {
         run("curl -OJL https://electronjs.org/headers/%s/node-%s-headers.tar.gz", electron_versions[i].name, electron_versions[i].name);
         run("mkdir targets/node-%s", electron_versions[i].name);
-        run("tar xzf node-%s-headers.tar.gz -C targets/node-%s --strip-components=1", electron_versions[i].name, electron_versions[i].name);
+        run("tar xzf node-%s-headers.tar.gz -C targets/node-%s", electron_versions[i].name, electron_versions[i].name);
+        run("mv ./targets/node-%s/node_headers/include ./targets/node-%s/include", electron_versions[i].name, electron_versions[i].name);
         run("curl -OJL https://electronjs.org/headers/%s/win-x64/node.lib > targets/node-%s/node.lib", electron_versions[i].name, electron_versions[i].name);
     }
 }
