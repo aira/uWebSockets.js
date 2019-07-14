@@ -64,7 +64,11 @@ void prepare() {
         run("curl -OJL https://electronjs.org/headers/%s/node-%s-headers.tar.gz", electron_versions[i].name, electron_versions[i].name);
         run("mkdir targets/node-%s", electron_versions[i].name);
         run("tar xzf node-%s-headers.tar.gz -C targets/node-%s", electron_versions[i].name, electron_versions[i].name);
-        run("mv ./targets/node-%s/node_headers/include ./targets/node-%s/include", electron_versions[i].name, electron_versions[i].name);
+        #ifdef IS_WINDOWS
+            run("move targets/node-%s/node_headers/include targets/node-%s/include /Y", electron_versions[i].name, electron_versions[i].name);
+        #else
+            run("mv ./targets/node-%s/node_headers/include ./targets/node-%s/include", electron_versions[i].name, electron_versions[i].name);
+        #endif
         run("curl -OJL https://electronjs.org/headers/%s/win-x64/node.lib > targets/node-%s/node.lib", electron_versions[i].name, electron_versions[i].name);
     }
 }
