@@ -1,0 +1,20 @@
+{
+  "name": "aira-uweb",
+  "version": "1.0.0",
+  "description": "aira fork of uwebsocket for electron",
+  "main": "uws.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aira/uWebSockets.js.git"
+  },
+  "author": "nick@aira.io",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aira/uWebSockets.js/issues"
+  },
+  "homepage": "https://github.com/aira/uWebSockets.js#readme"
+}
