@@ -64,7 +64,7 @@ void prepare() {
         run("curl -OJL https://electronjs.org/headers/%s/node-%s-headers.tar.gz", electron_versions[i].name, electron_versions[i].name);
         run("mkdir targets/node-%s", electron_versions[i].name);
         run("tar xzf node-%s-headers.tar.gz -C targets/node-%s", electron_versions[i].name, electron_versions[i].name);
-        run("curl https://atom.io/download/atom-shell/%s/x64/node.lib > targets/node-%s/node.lib", electron_versions[i].name, electron_versions[i].name);
+        run("curl -L https://electronjs.org/headers/v5.0.6/win-x64/node.lib > targets/node-%s/node.lib", electron_versions[i].name, electron_versions[i].name);
     }
 }
 
