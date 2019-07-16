@@ -106,7 +106,7 @@ void build_windows(char *arch) {
 
     // build for electron
     for (unsigned int i = 0; i < sizeof(electron_versions) / sizeof(struct electron_version); i++) {
-        run("cl /D \"LIBUS_USE_LIBUV\" /std:c++17 /I uWebSockets/uSockets/src uWebSockets/uSockets/src/*.c "
+        run("cl /D LIBUS_USE_LIBUV /D LIBUS_NO_SSL=0 /std:c++17 /I uWebSockets/uSockets/src uWebSockets/uSockets/src/*.c "
                     "uWebSockets/uSockets/src/eventing/*.c /I targets/node-%s/node_headers/include/node /I uWebSockets/src /EHsc "
                     "/Ox /LD /Fedist/uws_win32_%s_%s.node src/addon.cpp targets/node-%s/node.lib",
                     electron_versions[i].name, arch, electron_versions[i].abi, electron_versions[i].name);
