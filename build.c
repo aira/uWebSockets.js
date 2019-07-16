@@ -64,12 +64,7 @@ void prepare() {
         run("curl -OJL https://electronjs.org/headers/%s/node-%s-headers.tar.gz", electron_versions[i].name, electron_versions[i].name);
         run("mkdir targets/node-%s", electron_versions[i].name);
         run("tar xzf node-%s-headers.tar.gz -C targets/node-%s", electron_versions[i].name, electron_versions[i].name);
-        #ifdef IS_WINDOWS
-            run("move targets/node-%s/node_headers/include targets/node-%s/include /Y", electron_versions[i].name, electron_versions[i].name);
-        #else
-            run("mv ./targets/node-%s/node_headers/include ./targets/node-%s/include", electron_versions[i].name, electron_versions[i].name);
-        #endif
-        run("curl -OJL https://electronjs.org/headers/%s/win-x64/node.lib > targets/node-%s/node.lib", electron_versions[i].name, electron_versions[i].name);
+        run("curl -OJL https://atom.io/download/atom-shell/%s/x64/node.lib > targets/node-%s/node.lib", electron_versions[i].name, electron_versions[i].name);
     }
 }
 
@@ -85,8 +80,8 @@ void build(char *compiler, char *cpp_compiler, char *cpp_linker, char *os, char 
     }
     // build for electron
     for (unsigned int i = 0; i < sizeof(electron_versions) / sizeof(struct electron_version); i++) {
-        run("%s %s -I targets/node-%s/include/node", compiler, c_shared, electron_versions[i].name);
-        run("%s %s -I targets/node-%s/include/node", cpp_compiler, cpp_shared, electron_versions[i].name);
+        run("%s %s -I targets/node-%s/node_headers/include/node", compiler, c_shared, electron_versions[i].name);
+        run("%s %s -I targets/node-%s/node_headers/include/node", cpp_compiler, cpp_shared, electron_versions[i].name);
         run("%s %s %s -o dist/uws_%s_%s_%s.node", cpp_compiler, "-flto -O3 *.o -std=c++17 -shared", cpp_linker, os, arch, electron_versions[i].abi);
     }
 }
@@ -112,7 +107,7 @@ void build_windows(char *arch) {
     // build for electron
     for (unsigned int i = 0; i < sizeof(electron_versions) / sizeof(struct electron_version); i++) {
         run("cl /D \"LIBUS_USE_LIBUV\" /std:c++17 /I uWebSockets/uSockets/src uWebSockets/uSockets/src/*.c "
-                    "uWebSockets/uSockets/src/eventing/*.c /I targets/node-%s/include/node /I uWebSockets/src /EHsc "
+                    "uWebSockets/uSockets/src/eventing/*.c /I targets/node-%s/node_headers/include/node /I uWebSockets/src /EHsc "
                     "/Ox /LD /Fedist/uws_win32_%s_%s.node src/addon.cpp targets/node-%s/node.lib",
                     electron_versions[i].name, arch, electron_versions[i].abi, electron_versions[i].name);
     }
