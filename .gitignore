@@ -9,3 +9,6 @@ dist/
 *.gz
 *.lib
 *.out
+.vs/
+*.obj
+*.exe

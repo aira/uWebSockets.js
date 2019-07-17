@@ -2,10 +2,9 @@
   "name": "aira-uweb",
   "version": "1.0.0",
   "description": "aira fork of uwebsocket for electron",
-  "main": "uws.js",
-  "dependencies": {},
-  "devDependencies": {},
+  "main": "index.js",
   "scripts": {
+    "install": "prebuild-install || node-gyp rebuild"
   },
   "repository": {
     "type": "git",
@@ -16,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/aira/uWebSockets.js/issues"
   },
-  "homepage": "https://github.com/aira/uWebSockets.js#readme"
+  "homepage": "https://github.com/aira/uWebSockets.js#readme",
+  "dependencies": {
+    "prebuild-install": "5.3.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.99.0",
+    "prebuild": "9.0.0",
+    "run-script-os": "1.0.7",
+    "targetpractice": "0.0.7"
+  }
 }
