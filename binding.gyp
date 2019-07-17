@@ -47,14 +47,14 @@
       }]
     ],
 
-    'include_dirs':['uWebSockets/uSockets/src','uWebSockets/src','src'],
+    'include_dirs':['uWebSockets-src/uSockets/src','uWebSockets-src/src','src'],
     'sources': [
-    'uWebSockets/uSockets/src/context.c',
-    'uWebSockets/uSockets/src/loop.c',
-    'uWebSockets/uSockets/src/socket.c',
-     'uWebSockets/uSockets/src/eventing/epoll.c',
-     'uWebSockets/uSockets/src/eventing/libuv.c',
-    'uWebSockets/uSockets/src/ssl.c',
+    'uWebSockets-src/uSockets/src/context.c',
+    'uWebSockets-src/uSockets/src/loop.c',
+    'uWebSockets-src/uSockets/src/socket.c',
+    'uWebSockets-src/uSockets/src/eventing/epoll.c',
+    'uWebSockets-src/uSockets/src/eventing/libuv.c',
+    'uWebSockets-src/uSockets/src/ssl.c',
     'src/addon.cpp'
     ],
     'msvs_settings': {
